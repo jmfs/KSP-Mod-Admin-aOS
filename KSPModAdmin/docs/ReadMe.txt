@@ -1,26 +1,32 @@
-﻿KSP Mod Admin aOS by Bastian Heinrich - A tool to manage the installation, update and removal of mods.
+﻿KSP Mod Admin aOS by Bastian Heinrich
 
-OK, no rocket science but it speed up the installation, updating or deinstallation of mods and so you will have more time to do rocket science :D.
+KSP Mod Admin is a mod managing tool for KSP on any OS.
+It provides simple and fast mod managing and keeps your mod collection up to date.
+
+OK, no rocket science but it speed up the installation, updating or removal of mods and so you will have more time to do rocket science :D.
 It also let you choose what parts of the mod should be installed.
 
 
 Features:
-- KSP Version independent! (Until they changes mod loading again.)
-- Localized: English, German, Rusian, Italian, more are coming ... (contact me if you want to help)
+- KSP Version independent!
+- Localized: English, German, Russian, Italian, more are coming ... (contact me if you want to help)
 - Multi OS support: Win, Linux and Mac (via Mono-Project (see http://www.mono-project.com/))
-- Supports multible installations of KSP. Change between different KSP installations with one click.
+- Supports multiple installations of KSP. Change between different KSP installations with one click.
 - Support of ZIP-, RAR- and 7ZIP- mod archives.
-- Add mods or crafts with drag & drop, file selection or url (Support of KSP Forum, Curse, CurseForge, KerbalStuff, GitHub and BitBucket urls).
+- Add mods or crafts with drag & drop, file selection or URL (Support of KSP Forum, Curse, CurseForge, KerbalStuff, GitHub and BitBucket urls).
 - AVC Plugin version file detection.
 - Auto detects install folder for the mod (if possible the mod will be installed to the GameData folder).
 - Easy install destination control (for those cases the destination can't be auto detected).
 - Choose what to include, just by hook or unhook parts of a mod.
 - GameData scan for installed mods (they will be added to the mod selection if they aren't listed already).
-- Read text files of a mod by doubleclick the files.
+- Read text files of a mod by double click the files.
 - Update support:
   - for KSP Mod Admin.
   - for Mods (includes auto check for updates and auto install/update of outdated mods).
-- Project code included! (VS2013 Solution - Language: C#)
+- Conflict detection and easy conflict solving for files that are referenced by more than one mod.
+- Easy to use backup system. To backup your KSP saves or part customizations.
+- Plugin support for "3rd party" extensions (See KSPModAdmin.Translation.Plugin as a sample).
+- Project code included or on GitHub https://github.com/MacTee/KSP-Mod-Admin-aOS (VS2013 Solution - Language: C#).
 
 
 Requirements:
@@ -42,13 +48,27 @@ Installation:
    - Start KSP Mod Admin via mono ...
  Linux:
    - Install the Mono framework. (by type "sudo apt-get install mono-complete" in your terminal)
-   - Install mozilla certificats. (by type "mozroots --sync --import" in your terminal)
+   - Install Mozilla certificates. (by type "mozroots --sync --import" in your terminal)
    - Just extract/copy the KSP Mod Admin folder from the zip to any location you want.
    - Start KSP Mod Admin via mono ...
 
 
+Known issues:
+https://github.com/MacTee/KSP-Mod-Admin-aOS/wiki/Known-issues
+
+
+How to guid:
+https://github.com/MacTee/KSP-Mod-Admin-aOS/wiki
+
+
+Issue tracker:
+https://github.com/MacTee/KSP-Mod-Admin-aOS/issues
+
+
 Special thanks to:
-4o66, Gribbleshnibit8, HubertNNN, diomedea, SVlad, TheAlmightyOS, ... any many more!
+4o66, Gribbleshnibit8, HubertNNN, diomedea, SVlad, TheAlmightyOS, cy-one, Stone Blue, Benzschwagel, TheCardinal, 
+MrHanMan, Meatplow, MorisatoK, Reisu79, Jivaii, hiegova, craigmt1, LeadMagnet, Bergion, shadow651, Horman, cpottinger, 
+Roger25000, zapman987, Pondafarr, ... any many more!
 
 
 License:

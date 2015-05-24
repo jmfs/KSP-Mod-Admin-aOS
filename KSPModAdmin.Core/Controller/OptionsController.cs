@@ -154,6 +154,15 @@ namespace KSPModAdmin.Core.Controller
             set { if (View != null) View.DeleteOldArchivesAfterUpdate = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the a flag that determines if outdated mod should be colorized or not.
+        /// </summary>
+        public static bool Color4OutdatedMods
+        {
+            get { return (View != null) ? View.Color4OutdatedMods : false; }
+            set { if (View != null) View.Color4OutdatedMods = value; }
+        }
+
         #endregion
 
         #region Paths
@@ -378,15 +387,6 @@ namespace KSPModAdmin.Core.Controller
             }
         }
 
-        /// <summary>
-        /// Gets or sets the flag to determine if the ConflictSolver dialog should be shown or not.
-        /// </summary>
-        public static bool ShowConflictSolver
-        {
-            get { return (View != null) && View.ShowConflictSolver; }
-            set { if (View != null) View.ShowConflictSolver = value; }
-        }
-
         #region Colors
 
         /// <summary>
@@ -503,6 +503,9 @@ namespace KSPModAdmin.Core.Controller
             EventDistributor.AsyncTaskStarted += AsyncTaskStarted;
             EventDistributor.AsyncTaskDone += AsyncTaskDone;
             EventDistributor.LanguageChanged += LanguageChanged;
+
+            View.AddActionKey(VirtualKey.VK_DELETE, DeleteKnownPath);
+            View.AddActionKey(VirtualKey.VK_BACK, DeleteKnownPath);
         }
 
         #region Public
@@ -512,65 +515,87 @@ namespace KSPModAdmin.Core.Controller
         #region Update App
 
         /// <summary>
+        /// Gets the current version from "www.services.mactee.de/..."
+        /// and asks to start a download if new version is available.
+        /// </summary>
+        public static void Check4AppUpdates(bool forceUpdateCheck = false)
+        {
+            try
+            {
+                if (forceUpdateCheck || VersionCheck)
+                    HandleAdminVersionWebResponse(GetAdminVersionFromWeb());
+            }
+            catch (Exception ex)
+            {
+                Messenger.AddError("Error during KSP MA update check.", ex);
+            }
+        }
+
+        /// <summary>
         /// Starts an async Job.
         /// Gets the current version from "www.services.mactee.de/..."
         /// and asks to start a download if new version is available.
         /// </summary>
-        public static void Check4AppUpdates()
+        public static void Check4AppUpdatesAsync()
         {
             Messenger.AddInfo(Messages.MSG_KSPMA_UPDATE_CHECK_STARTED);
             mTaskAction = TaskAction.AppUpdateCheck;
             EventDistributor.InvokeAsyncTaskStarted(Instance);
             AsyncTask<WebResponse>.DoWork(
-                delegate
-                {
-                    WebResponse response = null;
-                    WebRequest request = WebRequest.Create(Constants.SERVICE_ADMIN_VERSION);
-                    request.Credentials = CredentialCache.DefaultCredentials;
-                    response = request.GetResponse();
-                    return response; 
-                },
-                delegate(WebResponse response, Exception ex)
+                () => GetAdminVersionFromWeb(),
+                (WebResponse response, Exception ex) =>
                 {
                     EventDistributor.InvokeAsyncTaskDone(Instance);
 
                     if (ex != null)
-                        MessageBox.Show(View.ParentForm, ex.Message);
+                        Messenger.AddError(Messages.MSG_KSPMA_UPDATE_ERROR, ex);
                     else
-                    {
-                        string status = ((HttpWebResponse)response).StatusDescription;
-                        Stream dataStream = response.GetResponseStream();
-                        StreamReader reader = new StreamReader(dataStream);
-                        string responseFromServer = reader.ReadToEnd();
-                        Dictionary<string, string> parameter = ToParameterDic(responseFromServer);
-
-                        if (!parameter.ContainsKey(Constants.VERSION))
-                            return;
-
-                        Version oldVersion = new Version(VersionHelper.GetAssemblyVersion());
-                        Version newVersion = new Version(parameter[Constants.VERSION]);
-                        if (oldVersion < newVersion)
-                        {
-                            View.llblAdminDownload.Text = string.Format(Constants.DOWNLOAD_FILENAME_TEMPLATE, parameter[Constants.VERSION]);
-                            frmUpdateDLG updateDLG = new frmUpdateDLG();
-                            updateDLG.DownloadPath = DownloadPath;
-                            updateDLG.PostDownloadAction = PostDownloadAction;
-                            updateDLG.Message = GetDownloadMSG(parameter);
-
-                            if (updateDLG.ShowDialog(View.ParentForm) != DialogResult.OK)
-                                return;
-
-                            DownloadPath = updateDLG.DownloadPath;
-                            PostDownloadAction = updateDLG.PostDownloadAction;
-                            DownloadNewAdminVersion();
-                        }
-                        else
-                        { 
-                            View.Up2Date = true;
-                            Messenger.AddInfo(Messages.MSG_KSP_UPTODATE);
-                        }
-                    }
+                        HandleAdminVersionWebResponse(response);
                 });
+        }
+
+        private static WebResponse GetAdminVersionFromWeb()
+        {
+            WebResponse response = null;
+            WebRequest request = WebRequest.Create(Constants.SERVICE_ADMIN_VERSION);
+            request.Credentials = CredentialCache.DefaultCredentials;
+            response = request.GetResponse();
+            return response;
+        }
+
+        private static void HandleAdminVersionWebResponse(WebResponse response)
+        {
+            string status = ((HttpWebResponse)response).StatusDescription;
+            Stream dataStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();
+            Dictionary<string, string> parameter = ToParameterDic(responseFromServer);
+
+            if (!parameter.ContainsKey(Constants.VERSION))
+                return;
+
+            Version oldVersion = new Version(VersionHelper.GetAssemblyVersion());
+            Version newVersion = new Version(parameter[Constants.VERSION]);
+            if (oldVersion < newVersion)
+            {
+                View.llblAdminDownload.Text = string.Format(Constants.DOWNLOAD_FILENAME_TEMPLATE, parameter[Constants.VERSION]);
+                frmUpdateDLG updateDLG = new frmUpdateDLG();
+                updateDLG.DownloadPath = DownloadPath;
+                updateDLG.PostDownloadAction = PostDownloadAction;
+                updateDLG.Message = GetDownloadMSG(parameter);
+
+                if (updateDLG.ShowDialog(View.ParentForm) != DialogResult.OK)
+                    return;
+
+                DownloadPath = updateDLG.DownloadPath;
+                PostDownloadAction = updateDLG.PostDownloadAction;
+                DownloadNewAdminVersion();
+            }
+            else
+            {
+                View.Up2Date = true;
+                Messenger.AddInfo(Messages.MSG_KSP_UPTODATE);
+            }
         }
 
         /// <summary>
@@ -744,6 +769,9 @@ namespace KSPModAdmin.Core.Controller
                 case ModUpdateInterval.OnceAWeek:
                     doUpdateCheck = (LastModUpdateTry.AddDays(7) < DateTime.Now);
                     break;
+                default:
+                    doUpdateCheck = false;
+                    break;
             }
 
             if (doUpdateCheck)
@@ -879,21 +907,7 @@ namespace KSPModAdmin.Core.Controller
                 return;
             }
 
-            string fullpath = SelectedKSPPath;
-            try
-            {
-                if (Directory.Exists(fullpath))
-                {
-                    Messenger.AddInfo(string.Format(Messages.MSG_OPENING_0_FOLDER, KSPINSTALL));
-                    System.Diagnostics.Process process = new System.Diagnostics.Process();
-                    process.StartInfo.FileName = fullpath;
-                    process.Start();
-                }
-            }
-            catch (Exception ex)
-            {
-                Messenger.AddError(string.Format(Messages.MSG_OPEN_0_FOLDER_FAILD, KSPINSTALL), ex);
-            }
+            OpenFolder(SelectedKSPPath);
         }
 
         /// <summary>
@@ -907,12 +921,19 @@ namespace KSPModAdmin.Core.Controller
                 return;
             }
 
-            string fullpath = DownloadPath;
+            OpenFolder(DownloadPath);
+        }
+
+        /// <summary>
+        /// Opens the path in a explorer window.
+        /// </summary>
+        public static void OpenFolder(string fullpath)
+        {
             try
             {
                 if (Directory.Exists(fullpath))
                 {
-                    Messenger.AddInfo(string.Format(Messages.MSG_OPENING_0_FOLDER, DOWNLOAD));
+                    Messenger.AddInfo(string.Format(Messages.MSG_OPENING_0_FOLDER, KSPINSTALL));
                     System.Diagnostics.Process process = new System.Diagnostics.Process();
                     process.StartInfo.FileName = fullpath;
                     process.Start();
@@ -920,7 +941,7 @@ namespace KSPModAdmin.Core.Controller
             }
             catch (Exception ex)
             {
-                Messenger.AddError(string.Format(Messages.MSG_OPEN_0_FOLDER_FAILD, DOWNLOAD), ex);
+                Messenger.AddError(string.Format(Messages.MSG_OPEN_0_FOLDER_FAILD, KSPINSTALL), ex);
             }
         }
 
@@ -1350,6 +1371,12 @@ namespace KSPModAdmin.Core.Controller
         #endregion
 
         #endregion
+
+        private static bool DeleteKnownPath(ActionKeyInfo keyState)
+        {
+            RemoveKSPPath();
+            return true;
+        }
 
         #region EventDistributor callback functions.
 

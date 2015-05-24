@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Windows.Forms;
 using KSPModAdmin.Core.Controller;
@@ -7,8 +8,6 @@ using KSPModAdmin.Core.Utils;
 
 namespace KSPModAdmin.Core.Views
 {
-    using System.Diagnostics.CodeAnalysis;
-
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Reviewed. Suppression is OK here.")]
     public partial class frmAddMod : frmBase
     {
@@ -37,7 +36,7 @@ namespace KSPModAdmin.Core.Views
             tbModPath.Enabled = false;
             btnAdd.Enabled = false;
             btnAddAndClose.Enabled = false;
-            btnCancel.Enabled = false;
+            btnClose.Enabled = false;
             btnFolderSearch.Enabled = false;
             cbInstallAfterAdd.Enabled = false;
             picLoading.Visible = true;
@@ -90,7 +89,7 @@ namespace KSPModAdmin.Core.Views
                 tbModPath.Enabled = true;
                 btnAdd.Enabled = true;
                 btnAddAndClose.Enabled = true;
-                btnCancel.Enabled = true;
+                btnClose.Enabled = true;
                 btnFolderSearch.Enabled = true;
                 cbInstallAfterAdd.Enabled = true;
                 picLoading.Visible = false;

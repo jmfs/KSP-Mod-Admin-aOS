@@ -18,7 +18,7 @@ namespace KSPModAdmin.Core
         public const string SERVICE_DOWNLOAD_LINK_MONO = "http://www.services.mactee.de/KSP/getKSP_MA_Zip2.php5?build=mono";
         public const string SERVICE_ADMIN_VERSION = "http://www.services.mactee.de/KSP/getKSP_MA_Version2.php5";
 
-        public const string PATHSEPERATOR = "\\";
+        public const string WIKIURL = "https://github.com/MacTee/KSP-Mod-Admin-aOS/wiki";
 
         public const string TRUE = "true";
         public const string FALSE = "false";
@@ -124,6 +124,8 @@ namespace KSPModAdmin.Core
         public const string LASTMODUPDATETRY = "LastModUpdateTry";
         public const string MODUPDATEINTERVAL = "ModUpdateInterval";
         public const string MODUPDATEBEHAVIOR = "ModUpdateBehavior";
+        public const string DELETEOLDARCHIVES = "DeleteOldArchivesAfterUpdate";
+        public const string COLOR4OUTDATEDMODS = "Color4OudatedMods";
         public const string DOWNLOAD_PATH = "DownloadPath";
         public const string NAME = "Name";
         public const string LONGNAME = "LongName";

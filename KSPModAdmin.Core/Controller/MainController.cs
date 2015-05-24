@@ -264,6 +264,9 @@ namespace KSPModAdmin.Core.Controller
                 tt.AutoPopDelay = (int)(ttDisplayTime * 1000);
             }
 
+            if (control.GetType() == typeof(ToolStrip))
+                ((ToolStrip)control).ShowItemToolTips = ttOnOff;
+
             foreach (Control ctrl in control.Controls)
                 SetToolTipValues(ttOnOff, ttDelay, ttDisplayTime, ctrl);
         }
@@ -315,6 +318,8 @@ namespace KSPModAdmin.Core.Controller
 
             LoadPlugins();
 
+            View.OrderTabPages();
+
             OptionsController.AvailableLanguages = Localizer.GlobalInstance.AvailableLanguages;
             OptionsController.SelectedLanguage = Localizer.GlobalInstance.CurrentLanguage;
 
@@ -333,8 +338,14 @@ namespace KSPModAdmin.Core.Controller
                 OptionsController.SelectedKSPPath = dlg.KSPPath;
             }
 
-            // auto mod update check.
+            // Auto KSP MA update check.
+            OptionsController.Check4AppUpdates();
+
+            // Auto mod update check.
             OptionsController.Check4ModUpdates(true);
+
+            // Initializing is done.
+            EventDistributor.InvokeKSPMAStarted(Instance);
         }
 
         /// <summary>
@@ -536,13 +547,25 @@ namespace KSPModAdmin.Core.Controller
         /// </summary>
         protected static void LoadPlugins()
         {
-            Log.AddDebugS("Loading plugins ...");
+            Messenger.AddDebug("Loading plugins ...");
+            List<IKSPMAPlugin> plugins = null;
             try
             {
-                var plugins = PluginLoader.LoadPlugins<IKSPMAPlugin>(KSPPathHelper.GetPath(KSPPaths.KSPMA_Plugins));
-                foreach (IKSPMAPlugin plugin in plugins)
+                plugins = PluginLoader.LoadPlugins<IKSPMAPlugin>(KSPPathHelper.GetPath(KSPPaths.KSPMA_Plugins));
+            }
+            catch (Exception ex)
+            {
+                Messenger.AddError("Error during plugin loading! Plugin loading aborded!", ex);
+            }
+
+            if (plugins == null)
+                return;
+
+            foreach (IKSPMAPlugin plugin in plugins)
+            {
+                try
                 {
-                    Log.AddDebugS(string.Format("Try add plugin \"{0}\" ...", plugin.Name));
+                    Messenger.AddDebug(string.Format("Try add plugin \"{0}\" ...", plugin.Name));
 
                     TabView[] tabViews = plugin.MainTabViews;
                     foreach (TabView tabView in tabViews)
@@ -566,11 +589,15 @@ namespace KSPModAdmin.Core.Controller
                         }
                         else
                         {
-                            Messenger.AddError(string.Format(Messages.MSG_ERROR_PLUGIN_LOADING_TABVIEWS_0, tabView.TabUserControl.GetTabCaption()));
+                            Messenger.AddError(string.Format(Messages.MSG_ERROR_PLUGIN_LOADING_TABVIEWS_0,
+                                tabView.TabUserControl.GetTabCaption()));
                         }
                     }
 
                     tabViews = plugin.OptionTabViews;
+                    if (tabViews == null)
+                        continue;
+
                     foreach (TabView tabView in tabViews)
                     {
                         if (!mAddedTabViews.ContainsKey(tabView.TabUserControl.GetTabCaption()))
@@ -587,14 +614,15 @@ namespace KSPModAdmin.Core.Controller
                         }
                         else
                         {
-                            Messenger.AddError(string.Format(Messages.MSG_ERROR_PLUGIN_LOADING_OPTIONVIEWS_0, tabView.TabUserControl.GetTabCaption()));
+                            Messenger.AddError(string.Format(Messages.MSG_ERROR_PLUGIN_LOADING_OPTIONVIEWS_0,
+                                tabView.TabUserControl.GetTabCaption()));
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                Messenger.AddError(string.Format("Plugin loading error: \"{0}\"", ex.Message), ex);
+                catch (Exception ex)
+                {
+                    Messenger.AddError(string.Format("Error during loading of plugin \"{0}\"", plugin.Name), ex);
+                }
             }
         }
         private static Dictionary<string, TabView> mAddedTabViews = new Dictionary<string, TabView>();
@@ -660,44 +688,5 @@ namespace KSPModAdmin.Core.Controller
         }
 
         #endregion
-
-
-
-
-
-        ////internal static void ShowFormTest()
-        ////{
-        ////    AsyncTask<KSPDialogResult>.DoWork(() =>
-        ////        {
-        ////            //return MainController.ShowForm<frmSelectDownload>();
-        ////            List<DownloadInfo> links = new List<DownloadInfo>();
-        ////            links.Add(new DownloadInfo() { Name = "Test 1", DownloadURL = "www.test1.de/mod.zip", Filename = "mod.zip", KnownHost = true });
-        ////            links.Add(new DownloadInfo() { Name = "Test 2", DownloadURL = "www.test2.de/anothermod.zip", Filename = "anothermod.zip", KnownHost = true });
-        ////            //return MainController.ShowForm<frmSelectDownload>(new object[] { links });
-        ////            return MainController.ShowForm<frmSelectDownload>(new object[] { links, links[1] });
-
-        ////            // Why the hell does this code below work???
-        ////            // Shouldn't this throw an exception cause of displaying a Form in a worker thread... =(
-        ////            // NO, ONLY IF THE FORM CHANGES SOMETHING ON THE MAIN GUI ...
-        ////            // If the displayed Form doesn't change any thing on the main GUI you can safely use the code below.
-        ////            //frmSelectDownload frm = new frmSelectDownload(links, links[1]);
-        ////            //frm.ShowDialog();
-        ////            //return frm.GetKSPDialogResults();
-        ////        },
-        ////        (result, ex) =>
-        ////        {
-        ////            if (ex != null)
-        ////                // Show errors
-        ////                MessageBox.Show(View,
-        ////                    string.Format("Error: {0}{1}StackTrace:{1}{2}", ex.Message, Environment.NewLine,
-        ////                        ex.StackTrace), "Error");
-        ////            else
-        ////                // Show results
-        ////                MessageBox.Show(View,
-        ////                    string.Format("DialogResult: {0}{1}AdditionalResult: {2}{1}Exception: {3}",
-        ////                        result.DialogResult, Environment.NewLine, result.AdditionalResult, result.Exception),
-        ////                    "KSPDialogResults");
-        ////        });
-        ////}
     }
 }

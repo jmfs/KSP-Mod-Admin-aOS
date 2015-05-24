@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows.Forms;
 using KSPModAdmin.Core.Model;
 using KSPModAdmin.Core.Utils.Controls.Aga.Controls.Tree;
+using KSPModAdmin.Core.Utils.Controls.Aga.Controls.Tree.Helper;
 using KSPModAdmin.Core.Utils.Controls.Aga.Controls.Tree.NodeControls;
 using KSPModAdmin.Core.Controller;
 using KSPModAdmin.Core.Properties;
@@ -194,6 +195,18 @@ namespace KSPModAdmin.Core.Views
             tvModSelection.SelectedNode = null;
         }
 
+        /// <summary>
+        /// Add a ActionKey CallbackFunction binding to the flag ListView.
+        /// </summary>
+        /// <param name="key">The action key that raises the callback.</param>
+        /// <param name="callback">The callback function with the action that should be called.</param>
+        /// <param name="modifierKeys">Required state of the modifier keys to get the callback function called.</param>
+        /// <param name="once">Flag to determine if the callback function should only be called once.</param>
+        public void AddActionKey(VirtualKey key, ActionKeyHandler callback, ModifierKey[] modifierKeys = null, bool once = false)
+        {
+            tvModSelection.AddActionKey(key, callback, modifierKeys, once);
+        }
+
         #region Event handling
 
         private void ucModSelection_Load(object sender, EventArgs e)
@@ -229,7 +242,7 @@ namespace KSPModAdmin.Core.Views
 
         private void tsbOverride_CheckedChanged(object sender, EventArgs e)
         {
-            tsbOverride.Image = tsbOverride.Checked ? Resources.component_data_next : Resources.component_data_delete;
+            tsbOverride.Image = tsbOverride.Checked ? Resources.component_next_data_24x24 : Resources.component_delete_data_24x24;
         }
 
         private void tsbAddMod_Click(object sender, EventArgs e)
@@ -403,9 +416,34 @@ namespace KSPModAdmin.Core.Views
             ModSelectionController.CheckAllMods();
         }
 
+        private void tsbHelp_Click(object sender, EventArgs e)
+        {
+            ModSelectionController.OpenWiki();
+        }
+
+        private void tsbRelocateArchivePath_Click(object sender, EventArgs e)
+        {
+            ModSelectionController.RelocateArchivePath(SelectedMod);
+        }
+
+        private void tsmiRelocateArchivePathAllMods_Click(object sender, EventArgs e)
+        {
+            ModSelectionController.RelocateArchivePathAllMods();
+        }
+
         private void tsmiCmsTreeViewOptions_Click(object sender, EventArgs e)
         {
             ModSelectionController.OpenTreeViewOptions();
+        }
+
+        private void tsmiCmsOneModOpenFolder_Click(object sender, EventArgs e)
+        {
+            OpenFolder(SelectedNode);
+        }
+
+        private void tsmiCmsOneModOpenFile_Click(object sender, EventArgs e)
+        {
+            OpenFile(SelectedNode);
         }
 
         #endregion
@@ -471,7 +509,7 @@ namespace KSPModAdmin.Core.Views
                 tsbEditModInfos.Enabled = true;
                 tsbCopyModInfos.Enabled = true;
 
-                ////tsbSolveConflicts.Enabled = true;
+                tsbSolveConflicts.Enabled = ModRegister.HasConflicts;
                 tsbRefreshCheckedState.Enabled = true;
 
                 tssbChangeDestination.Enabled = true;
@@ -479,6 +517,7 @@ namespace KSPModAdmin.Core.Views
                 tsmiResetDestination.Enabled = true;
 
                 tsbCreateZip.Enabled = !selectedNode.ZipExists;
+                tsbRelocateArchivePath.Enabled = true;
             }
             else
             {
@@ -487,13 +526,13 @@ namespace KSPModAdmin.Core.Views
                 ModVersionControl = (OptionsController.VersionCheck) ? Messages.ON : Messages.OFF;
                 ModID = string.Empty;
                 ModVersion = VersionHelper.GetAssemblyVersion(false);
-                KSPVersion = "0.21";
-                ModAuthor = "BHeinrich";
-                ModCreationDate = "27.05.2014";
-                ModChangeDate = "12.12.2014";
+                KSPVersion = "0.21 or higher";
+                ModAuthor = "BHeinrich (MacKerbal@mactee.de)";
+                ModCreationDate = "25.04.2013";
+                ModChangeDate = "18.05.2015";
                 ModOutdated = false;
                 ModRating = string.Empty;
-                ModDownloads = "75k+";
+                ModDownloads = "86k+";
                 ModNote = "KSP MA aOS is the mod managing tool for KSP on any OS. ;)";
                 FileName = "KSPModAdmin.exe";
                 FileDestination = string.Empty;
@@ -526,7 +565,7 @@ namespace KSPModAdmin.Core.Views
                 tsbEditModInfos.Enabled = false;
                 tsbCopyModInfos.Enabled = false;
 
-                tsbSolveConflicts.Enabled = false;
+                tsbSolveConflicts.Enabled = ModRegister.HasConflicts;
                 tsbRefreshCheckedState.Enabled = false;
 
                 tssbChangeDestination.Enabled = false;
@@ -534,6 +573,7 @@ namespace KSPModAdmin.Core.Views
                 tsmiResetDestination.Enabled = false;
 
                 tsbCreateZip.Enabled = false;
+                tsbRelocateArchivePath.Enabled = false;
             }
 
             lvModSelection.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -560,7 +600,7 @@ namespace KSPModAdmin.Core.Views
             }
             else if (!node.HasDestination && !node.HasDestinationForChilds)
                 e.TextColor = OptionsController.ColorDestinationMissing;
-            if (node.IsOutdated)
+            if (OptionsController.Color4OutdatedMods && node.IsOutdated)
                 e.TextColor = OptionsController.ColorModOutdated;
             if (!node.ZipExists)
                 e.TextColor = OptionsController.ColorModArchiveMissing;
@@ -608,9 +648,7 @@ namespace KSPModAdmin.Core.Views
 
         private void tvModSelection_DoubleClick(object sender, EventArgs e)
         {
-            ModNode node = SelectedNode as ModNode;
-            if (node != null && node.IsFile)
-                ModSelectionController.OpenTextDisplayer(node);
+            OpenFile(SelectedNode);
         }
 
         private void tvModSelection_ColumnClicked(object sender, TreeColumnEventArgs e)
@@ -627,7 +665,7 @@ namespace KSPModAdmin.Core.Views
             else if (e.Column.SortOrder == SortOrder.Ascending)
                 e.Column.SortOrder = SortOrder.Descending;
 
-            SortColumn(e.Column as ModSelectionTreeColumn);
+            SortColumn(e.Column as NamedTreeColumn);
         }
 
         #endregion
@@ -661,6 +699,9 @@ namespace KSPModAdmin.Core.Views
                 tsmiCmsProceedMod.Visible = (selectedModCount == 1);
                 tsmiCmsProceedHighlightedMods.Visible = !tsmiCmsProceedMod.Visible;
                 tsmiCmsCreateZip.Enabled = !selectedNode.ZipExists;
+                tsmiCmsOneModOpenFile.Visible = selectedNode.IsFile;
+                tsmiCmsOneModOpenFolder.Visible = !selectedNode.IsFile && selectedNode.IsInstalled;
+                tsmiCmsSolveConflicts.Enabled = ModRegister.HasConflicts;
             }
 
             if (tvModSelection.SelectedNodes.Count > 1)
@@ -670,12 +711,19 @@ namespace KSPModAdmin.Core.Views
                 tsmiCmsRedetectDestination.Enabled = false;
                 tsmiCmsResetDestination.Visible = false;
                 tsmiCmsResetDestinations.Visible = true;
+                tsmiCmsOneModOpenFile.Visible = false;
+                tsmiCmsOneModOpenFolder.Visible = false;
             }
             else
             {
                 tsmiCmsResetDestination.Visible = true;
                 tsmiCmsResetDestinations.Visible = false;
             }
+        }
+
+        private void cmsModSelectionAllMods_Opened(object sender, EventArgs e)
+        {
+            tsmiOpenConflictSolver.Enabled = ModRegister.HasConflicts;
         }
 
         #endregion
@@ -748,8 +796,8 @@ namespace KSPModAdmin.Core.Views
             ControlTranslator.TranslateControls(Localizer.GlobalInstance, this as Control, OptionsController.SelectedLanguage);
 
             // translate columns of ModSelection TreeView
-            List<ModSelectionTreeColumn> columns = new List<ModSelectionTreeColumn>();
-            foreach (ModSelectionTreeColumn column in tvModSelection.Columns)
+            List<NamedTreeColumn> columns = new List<NamedTreeColumn>();
+            foreach (NamedTreeColumn column in tvModSelection.Columns)
             {
                 var newColData = ModSelectionColumnsInfo.GetColumn(column.Name);
                 if (newColData != null)
@@ -757,7 +805,7 @@ namespace KSPModAdmin.Core.Views
             }
         }
 
-        internal void SortColumn(ModSelectionTreeColumn column)
+        internal void SortColumn(NamedTreeColumn column)
         {
             if (column == null)
                 return;
@@ -816,6 +864,18 @@ namespace KSPModAdmin.Core.Views
             }
 
             InvalidateView();
+        }
+
+        private void OpenFile(ModNode node)
+        {
+            if (node != null && node.IsFile)
+                ModSelectionController.OpenTextDisplayer(node);
+        }
+
+        private void OpenFolder(ModNode node)
+        {
+            if (node != null && !node.IsFile && node.IsInstalled)
+                OptionsController.OpenFolder(KSPPathHelper.GetAbsolutePath(SelectedNode.Destination));
         }
     }
 }

@@ -289,7 +289,7 @@
 	<Control Name="btnModOutdated" Value="">
 		<ChildControl Name="btnModOutdated_ToolTip" Value="Chose node color for nodes where the mod is outdated."/>
 	</Control>
-  <Control Name="gpModConflictHandling" Value="Mod file conflict handling (Experimental):"/>
+  <Control Name="gpModConflictHandling" Value="Mod file conflict handling:"/>
   <Control Name="cbConflictDetectionOnOff" Value="Conflict detection On / Off">
 		<ChildControl Name="cbConflictDetectionOnOff_ToolTip" Value="Conflict detection On / Off^Turns the conflict detection on or off."/>
 	</Control>
@@ -297,7 +297,7 @@
 		<ChildControl Name="cbShowConflictSolver_ToolTip" Value="Show conflict detection dialog^Show/hides the conflict detection doalog after conflict detection."/>
 	</Control>
   
-  <Control Name="frmAddMod" Value="Adding mod"/>
+  <Control Name="frmAddMod" Value="Add mod"/>
   <Control Name="cbInstallAfterAdd" Value="Install after add.">
     <ChildControl Name="cbInstallAfterAdd_ToolTip" Value="Check to let KSP MA install the new mod right after adding."/>
   </Control>
@@ -463,7 +463,7 @@
   <String Name="MSG_ERROR_DURING_SAVING_KSP_MOD_SETTINGS" Value="Error during saving of KSP Mod settings!"/>
   <String Name="MSG_ERROR_MESSAGE_0" Value="Error message: {0}"/>
   <String Name="MSG_ACCESS_DENIED_DIALOG_MESSAGE" Value="KSP Mod Admin can't save its config file. The access to the KSP path was denied.^If you have install KSP into the Program folder of Windows,^KSP MA needs admin rights to manipulate (save/change KSP MA config file).^You can move you install dir of KSP to another spot or start KSPMA in admin mode with:^  - a right click on the KSPModAdmin.exe and choose &quot;Run as Admin&quot;^or for a permanent change:^  - right click the KSPModAdmin.exe^  - choose properties^  - choose compatibility^  - check the &quot;Run as Admin&quot; CheckBox at the bottom.^  - press OK."/>
-  <String Name="MSG_DELETE_ALL_MODS_QUESTION" Value="Are you sure to uninstall all Mod?"/>
+  <String Name="MSG_DELETE_ALL_MODS_QUESTION" Value="Are you sure to uninstall all mods?"/>
   <String Name="MSG_DELETE_MOD_0_QUESTION" Value="Are you sure to uninstall the mod &quot;{0}&quot;?"/>
   <String Name="MSG_INVALID_URL_SAVE_ANYWAY" Value="Invalid URL save anyway?"/>
   <String Name="MSG_ENTER_VALID_URL_FIRST" Value="Enter a URL first please."/>
@@ -665,5 +665,58 @@
   <Control Name="tsmiExportAsText" Value="Export as .txt">
     <ChildControl Name="tsmiExportAsText_ToolTip" Value="Export as .txt^Save the current mod list as a text file."/>
   </Control>
+
+  <String Name="MSG_EXTRACTING_MOD_0" Value="Extracting mod &quot;{0}&quot;..."/>
+  <String Name="MSG_MODARCHIVE_0_NOT_FOUND" Value="Mod Archive &quot;{0}&quot; not found!"/>
+  <String Name="MSG_IMPORT_SKIPPED_MOD_0_NOT_FOUND" Value="Import skipped! Mod Archive &quot;{0}&quot; not found."/>
+  <String Name="MSG_COPY_MOD_DESTINATION_0" Value="Copy destinations of mod &quot;{0}&quot;"/>
+  <String Name="MSG_INSTALLING_MOD_0" Value="Installing mod &quot;{0}&quot;..."/>
+
+  <Control Name="tsbTreeViewOption" Value="Open TreeView options">
+    <ChildControl Name="tsbTreeViewOption_ToolTip" Value="Open TreeView options^Opens the TreeView options."/>
+  </Control>
+  <Control Name="tsmiCmsOneModOpenFolder" Value="Open folder"/>
+  <Control Name="tsmiCmsOneModOpenFile" Value="Open file"/>
+  <Control Name="frmConflictSolver" Value="Conflict Solver"/>
+  <Control Name="btnSolve" Value="Solve conflicts"/>
+  <Control Name="frmConflictSolver_Item_00" Value="Filename"/>
+  <Control Name="frmConflictSolver_Item_01" Value="Destination"/>
+  <Control Name="frmConflictSolver_Item_02" Value="Conflicting Mods"/>
+  <Control Name="frmConflictSolver_Item_03" Value="TreePath"/>
+  <String Name="MSG_TITLE_VALIDATION" Value="Validation"/>
+  <String Name="MSG_PLEASE_SELECT_SOLVING_MODS" Value="Please select a solving mod for this conflict files:"/>
+  <String Name="MSG_PROCESSING_ABORDED_CONFLICTS_DETECTED" Value="Processing of mods aborded!^There are still conflicts.^^Please resolve all conflicts and try again."/>
+  <String Name="MSG_TITLE_CONFLICTS_DETECTED" Value="Conflicts detected!"/>
+  <String Name="MSG_CONFLICT_SOLVER_REMOVE_CONFLICT_FILE_0" Value="ConflictSolver - Removing installed conflict file &quot;{0}&quot;."/>
+  <String Name="MSG_CONFLICT_SOLVER_RESET_DESTINATION_CONFLICT_FILE_0" Value="ConflictSolver - Reset destination of conflict file &quot;{0}&quot;."/>
+  <String Name="MSG_CONFLICT_SOLVER_INSTALL_SELECTED_FILE_0" Value="ConflictSolver - Install previously removed conflict file &quot;{0}&quot; from selected source."/>
+  <String Name="MSG_CONFLICT_SOLVER_UNINSTALL_PARENT_FOLDER_0_1" Value="ConflictSolver - Uninstall no longer needed parent folder &quot;{0}&quot; of &quot;{1}&quot;."/>
+  <String Name="MSG_CONFLICT_SOLVER_INSTALL_PARENT_FOLDER_0_1" Value="ConflictSolver - Install needed parent folder &quot;{0}&quot; of &quot;{1}&quot;."/>
+  <String Name="MSG_CONFLICT_SOLVER_RESET_DESTINATION_PARENT_FOLDER_0_1" Value="ConflictSolver - Reset destination for conflicting parent folder &quot;{0}&quot; of &quot;{1}&quot;."/>
+  <Control Name="tsmiOpenConflictSolver" Value="Solve conflicts"/>
+  <String Name="MSG_KSPMA_UPDATE_ERROR" Value="Error during KSP MA update check."/>
+
+  <Control Name="frmConflictSolver_Item_04" Value="Version"/>
+  <Control Name="frmConflictSolver_Item_05" Value="ArchivePath"/>
+  <Control Name="lblConflictSolverDesc" Value="To solve a conflict, check one of the mods of a conflicting file.^After selecting a mod for each conflicting file click the &quot;Solve conflicts&quot; button.^KSP Mod Admin will then reset all destinations of the conflicting files from the not selected mods.^Right click a mod to solve all conflicts in favor of the selected mod."/>
+  <Control Name="cbNodColoringUpdatableMods" Value="Node coloring on/off">
+    <ChildControl Name="cbNodColoringUpdatableMods_ToolTip" Value="Node coloring on/off^Turns the colorization of mod nodes which are outdated on or off."/>
+  </Control>
+  <String Name="MSG_NO_SITEHANDLER_FOUND_FOR_URL_0" Value="No SiteHandler for URL &quot;{0}&quot; found!^Mod Info Update aborded!"/>
+  <Control Name="btnClose" Value="Close">
+    <ChildControl Name="btnClose_ToolTip" Value="Closes the dialog."/>
+  </Control>
+  <Control Name="tsbHelp" Value="tsbHelp">
+    <ChildControl Name="tsbHelp_ToolTip" Value="Open help^Opens the KSP Mod Admin Wiki on GitHup with your browser."/>
+  </Control>
+
+  <String Name="MSG_ERROR_EXPORT_FAILED_0" Value="Error! Export failed: &quot;{0}&quot;"/>
+
+  <String Name="MSG_SELECT_NEW_ARCHIVE_PATH" Value="Please select the new archive path."/>
+  <String Name="MSG_MOD_0_ARCHIVE_PATH_CHANGED_TO_1" Value="Archive path of mod &quot;{0}&quot; changed to &quot;{1}&quot;."/>
+  <String Name="MSG_MOD_ARCHIVE_0_NOT_FOUND_MOD_1" Value="Mod archive &quot;{0}&quot; not found. Can't change archive path of mod &quot;{1}&quot;."/>
+  <String Name="MSG_COPY_MOD_0_DESTINATION_FAILED" Value="Error! Copy destinations of mod &quot;{0}&quot; failed!"/>
+  
+  <String Name="MSG_SCAN_ERROR_DURING_SCAN" Value="Error during Gamedata folder scan."/>
 
 </Language>

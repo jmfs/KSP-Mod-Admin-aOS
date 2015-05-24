@@ -102,9 +102,9 @@
   </Control>
   <Control Name="tsModSelection" Value="(T)toolStrip1">
     <Control Name="tssbAddMod" Value="(T)toolStripButton1">
-      <ChildControl Name="tssbAddMod_ToolTip" Value="Aggiungi finestra^Apre la &amp;quot;Finestra di aggiunta mod&amp;quot;." />
+      <ChildControl Name="tssbAddMod_ToolTip" Value="Finestra di aggiunta^Apre la &amp;quot;Finestra di aggiunta mod&amp;quot;." />
       <Control Name="tsmiAddMod" Value="(T)Add dialog">
-        <ChildControl Name="tsmiAddMod_ToolTip" Value="Aggiungi finestra^Apre la &amp;quot;Finestra di aggiunta mod&amp;quot;." />
+        <ChildControl Name="tsmiAddMod_ToolTip" Value="Finestra di aggiunta^Apre la &amp;quot;Finestra di aggiunta mod&amp;quot;." />
       </Control>
       <Control Name="tsmiAddModArchives" Value="Aggiungi archivi mod">
         <ChildControl Name="tsmiAddModArchives_ToolTip" Value="Aggiungi archivio mod^Apre la &amp;quot;Finestra di selezione mod&amp;quot; to add a mod archive." />
@@ -213,7 +213,7 @@
   <Control Name="gbPaths" Value="Percorsi:" />
   <Control Name="lblLoading" Value="sto cercando..." />
   <Control Name="cbKSPPath" Value="">
-    <ChildControl Name="cbKSPPath_ToolTip" Value="Scegli il percorso di installazine di KSP in cui eseguire azioni." />
+    <ChildControl Name="cbKSPPath_ToolTip" Value="Scegli il percorso di installazione di KSP in cui eseguire azioni." />
   </Control>
   <Control Name="lblModDownloadPath" Value="Percorso Download/Mod:" />
   <Control Name="btnDownloadPath" Value="">
@@ -289,7 +289,7 @@
   <Control Name="btnModOutdated" Value="">
     <ChildControl Name="btnModOutdated_ToolTip" Value="Scegli il colore di nodi per Mod obsoleti." />
   </Control>
-  <Control Name="gpModConflictHandling" Value="Gestione dei conflitti tra file dei Mod (sperimentale)" />
+  <Control Name="gpModConflictHandling" Value="Gestione dei conflitti tra file dei Mod:" />
   <Control Name="cbConflictDetectionOnOff" Value="Individuazione dei conflitti On / Off">
     <ChildControl Name="cbConflictDetectionOnOff_ToolTip" Value="Individuazione dei conflitti On / Off^Cambia l'individuazione dei conflitti tra on e off." />
   </Control>
@@ -658,12 +658,65 @@
 
   <String Name="MSG_NO_DOWNLOAD_INFOS_FOUND" Value="Nessun link di download trovato!"/>
 
-  <String Name="MSG_NO_BINARY_DOWNLOAD_FOUND_AT_0" Value="(T)No binary download found at &quot;{0}&quot;!"/>
+  <String Name="MSG_NO_BINARY_DOWNLOAD_FOUND_AT_0" Value="Nessun download eseguibile trovato a &quot;{0}&quot;!"/>
   <Control Name="tsmiExImport" Value="Importa/Esporta modpack">
-    <ChildControl Name="tsmiExImport_ToolTip" Value="Importa/Esporta modpack^Apre l'Importazione/Esportazione per i modpack." />  
+    <ChildControl Name="tsmiExImport_ToolTip" Value="Importa/Esporta modpack^Apre l'Importazione/Esportazione per i modpack." />
   </Control>
-  <Control Name="tsmiExportAsText" Value="(T)Export as .txt">
-    <ChildControl Name="tsmiExportAsText_ToolTip" Value="(T)Export as .txt^Save the current mod list as a text file."/>
+  <Control Name="tsmiExportAsText" Value="Esporta come .txt">
+    <ChildControl Name="tsmiExportAsText_ToolTip" Value="Esporta come .txt^Salva la lista di mods scelta come textfile."/>
   </Control>
+
+  <String Name="MSG_EXTRACTING_MOD_0" Value="Estrazione mod &quot;{0}&quot;..."/>
+  <String Name="MSG_MODARCHIVE_0_NOT_FOUND" Value="Archivio mod &quot;{0}&quot; non trovato!"/>
+  <String Name="MSG_IMPORT_SKIPPED_MOD_0_NOT_FOUND" Value="Importazione annullata! Archivio dei mod &quot;{0}&quot; non trovato."/>
+  <String Name="MSG_COPY_MOD_DESTINATION_0" Value="Copia la destinazione del mod &quot;{0}&quot;"/>
+  <String Name="MSG_INSTALLING_MOD_0" Value="Installazione mod &quot;{0}&quot;..."/>
+
+  <Control Name="tsbTreeViewOption" Value="Apri le opzioni di TreeView">
+    <ChildControl Name="tsbTreeViewOption_ToolTip" Value="Apri le opzioni di TreeView^Visualizza le opzioni di TreeView."/>
+  </Control>
+  <Control Name="tsmiCmsOneModOpenFolder" Value="Apri cartella"/>
+  <Control Name="tsmiCmsOneModOpenFile" Value="Apri file"/>
+  <Control Name="frmConflictSolver" Value="Risolutore Conflitti"/>
+  <Control Name="btnSolve" Value="Risolvi i conflitti"/>
+  <Control Name="frmConflictSolver_Item_00" Value="Nome del File"/>
+  <Control Name="frmConflictSolver_Item_01" Value="Destinazione"/>
+  <Control Name="frmConflictSolver_Item_02" Value="Mod in conflitto"/>
+  <Control Name="frmConflictSolver_Item_03" Value="Percorso"/>
+  <String Name="MSG_TITLE_VALIDATION" Value="Validazione"/>
+  <String Name="MSG_PLEASE_SELECT_SOLVING_MODS" Value="Seleziona un mod valido per i file in questo conflitto:"/>
+  <String Name="MSG_PROCESSING_ABORDED_CONFLICTS_DETECTED" Value="Processazione dei mod abortita!^Ci sono ancora conflitti.^^Risolvete tutti i conflitti e riprovate."/>
+  <String Name="MSG_TITLE_CONFLICTS_DETECTED" Value="Conflitti individuati!"/>
+  <String Name="MSG_CONFLICT_SOLVER_REMOVE_CONFLICT_FILE_0" Value="Risolutore conflitti - Rimozione del file installato in conflitto &quot;{0}&quot;."/>
+  <String Name="MSG_CONFLICT_SOLVER_RESET_DESTINATION_CONFLICT_FILE_0" Value="Risolutore conflitti - Annullamento della destinazione del file in conflitto &quot;{0}&quot;."/>
+  <String Name="MSG_CONFLICT_SOLVER_INSTALL_SELECTED_FILE_0" Value="Risolutore conflitti - Installazione del file in conflitto precedentemente rimosso &quot;{0}&quot; dalla origine selezionata."/>
+  <String Name="MSG_CONFLICT_SOLVER_UNINSTALL_PARENT_FOLDER_0_1" Value="Risolutore conflitti - Disinstallazione della cartella superiore non più necessaria &quot;{0}&quot; di &quot;{1}&quot;."/>
+  <String Name="MSG_CONFLICT_SOLVER_INSTALL_PARENT_FOLDER_0_1" Value="Risolutore conflitti - Installazione della cartella superiore necessaria &quot;{0}&quot; di &quot;{1}&quot;."/>
+  <String Name="MSG_CONFLICT_SOLVER_RESET_DESTINATION_PARENT_FOLDER_0_1" Value="Risolutore conflitti - Annullamento della destinazione per la cartella superiore in conflitto &quot;{0}&quot; di &quot;{1}&quot;."/>
+  <Control Name="tsmiOpenConflictSolver" Value="Risolvi i conflitti"/>
+  <String Name="MSG_KSPMA_UPDATE_ERROR" Value="Errore durante il controllo di aggiornamento di KSP Mod Admin."/>
+
+  <Control Name="frmConflictSolver_Item_04" Value="Version"/>
+  <Control Name="frmConflictSolver_Item_05" Value="ArchivePath"/>
+  <Control Name="lblConflictSolverDesc" Value="Per risolvere un conflitto, scegli uno dei mod di un file in conflitto. ^Dopo aver scelto un mod per ciascun file in conflitto, clicca il bottone &quot;Risolvi conflitti&quot;. ^KSP Mod Admin allora resetterà tutte le destinazioni dei file in conflitto per i mod non selezionati.^Right click a mod to solve all conflicts in favor of the selected mod."/>
+  <Control Name="cbNodColoringUpdatableMods" Value="Node coloring on/off">
+    <ChildControl Name="cbNodColoringUpdatableMods_ToolTip" Value="Node coloring on/off^Turns the colorization of mod nodes which are outdated on or off."/>
+  </Control>
+  <String Name="MSG_NO_SITEHANDLER_FOUND_FOR_URL_0" Value="No SiteHandler for URL &quot;{0}&quot; found!^Mod Info Update aborded!"/>
+  <Control Name="btnClose" Value="Close">
+    <ChildControl Name="btnClose_ToolTip" Value="Closes the dialog." />
+  </Control>
+  <Control Name="tsbHelp" Value="tsbHelp">
+    <ChildControl Name="tsbHelp_ToolTip" Value="Open help^Opens the KSP Mod Admin Wiki on GitHup with your browser."/>
+  </Control>
+
+  <String Name="MSG_ERROR_EXPORT_FAILED_0" Value="Error! Export failed: &quot;{0}&quot;"/>
+
+  <String Name="MSG_SELECT_NEW_ARCHIVE_PATH" Value="Please select the new archive path."/>
+  <String Name="MSG_MOD_0_ARCHIVE_PATH_CHANGED_TO_1" Value="Archive path of mod &quot;{0}&quot; changed to &quot;{1}&quot;."/>
+  <String Name="MSG_MOD_ARCHIVE_0_NOT_FOUND_MOD_1" Value="Mod archive &quot;{0}&quot; not found. Can't change archive path of mod &quot;{1}&quot;."/>
+  <String Name="MSG_COPY_MOD_0_DESTINATION_FAILED" Value="Error! Copy destinations of mod &quot;{0}&quot; failed!"/>
+
+  <String Name="MSG_SCAN_ERROR_DURING_SCAN" Value="Error during Gamedata folder scan."/>
   
 </Language>

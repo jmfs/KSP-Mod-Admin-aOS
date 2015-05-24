@@ -1919,5 +1919,243 @@ namespace KSPModAdmin.Core
         }
 
         private const string DEFAULT_MSG_NO_BINARY_DOWNLOAD_FOUND_AT_0 = "No binary download found at \"{0}\"!";
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static string MSG_EXTRACTING_MOD_0
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_EXTRACTING_MOD_0"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_EXTRACTING_MOD_0).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_EXTRACTING_MOD_0 = "Extracting mod \"{0}\"...";
+        
+        public static string MSG_MODARCHIVE_0_NOT_FOUND
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_MODARCHIVE_0_NOT_FOUND"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_MODARCHIVE_0_NOT_FOUND).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_MODARCHIVE_0_NOT_FOUND = "Mod Archive \"{0}\" not found!";
+
+        public static string MSG_IMPORT_SKIPPED_MOD_0_NOT_FOUND
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_IMPORT_SKIPPED_MOD_0_NOT_FOUND"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_IMPORT_SKIPPED_MOD_0_NOT_FOUND).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_IMPORT_SKIPPED_MOD_0_NOT_FOUND = "Import skipped! Mod Archive \"{0}\" not found.";
+
+        public static string MSG_COPY_MOD_DESTINATION_0
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_COPY_MOD_DESTINATION_0"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_COPY_MOD_DESTINATION_0).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_COPY_MOD_DESTINATION_0 = "Copy destinations of mod \"{0}\"";
+
+        public static string MSG_INSTALLING_MOD_0
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_INSTALLING_MOD_0"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_INSTALLING_MOD_0).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_INSTALLING_MOD_0 = "Installing mod \"{0}\"...";
+
+        public static string MSG_TITLE_VALIDATION
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_TITLE_VALIDATION"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_TITLE_VALIDATION).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_TITLE_VALIDATION = "Validation";
+
+
+        public static string MSG_PLEASE_SELECT_SOLVING_MODS
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_PLEASE_SELECT_SOLVING_MODS"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_PLEASE_SELECT_SOLVING_MODS).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_PLEASE_SELECT_SOLVING_MODS = "Please select a solving mod for this conflict files:";
+
+        public static string MSG_PROCESSING_ABORDED_CONFLICTS_DETECTED
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_PROCESSING_ABORDED_CONFLICTS_DETECTED"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_PROCESSING_ABORDED_CONFLICTS_DETECTED).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_PROCESSING_ABORDED_CONFLICTS_DETECTED = "Processing of mods aborded!^There are still conflicts.^^Please resolve all conflicts and try again.";
+
+        public static string MSG_TITLE_CONFLICTS_DETECTED
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_TITLE_CONFLICTS_DETECTED"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_TITLE_CONFLICTS_DETECTED).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_TITLE_CONFLICTS_DETECTED = "Conflicts detected!";
+
+        public static string MSG_CONFLICT_SOLVER_REMOVE_CONFLICT_FILE_0
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_CONFLICT_SOLVER_REMOVE_CONFLICT_FILE_0"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_CONFLICT_SOLVER_REMOVE_CONFLICT_FILE_0).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_CONFLICT_SOLVER_REMOVE_CONFLICT_FILE_0 = "ConflictSolver - Removing installed conflict file \"{0}\".";
+
+        public static string MSG_CONFLICT_SOLVER_RESET_DESTINATION_CONFLICT_FILE_0
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_CONFLICT_SOLVER_RESET_DESTINATION_CONFLICT_FILE_0"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_CONFLICT_SOLVER_RESET_DESTINATION_CONFLICT_FILE_0).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_CONFLICT_SOLVER_RESET_DESTINATION_CONFLICT_FILE_0 = "ConflictSolver - Reset destination of conflict file \"{0}\".";
+
+        public static string MSG_CONFLICT_SOLVER_INSTALL_SELECTED_FILE_0
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_CONFLICT_SOLVER_INSTALL_SELECTED_FILE_0"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_CONFLICT_SOLVER_INSTALL_SELECTED_FILE_0).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_CONFLICT_SOLVER_INSTALL_SELECTED_FILE_0 = "ConflictSolver - Install previously removed conflict file \"{0}\" from selected source.";
+
+        public static string MSG_CONFLICT_SOLVER_UNINSTALL_PARENT_FOLDER_0_1
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_CONFLICT_SOLVER_UNINSTALL_PARENT_FOLDER_0_1"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_CONFLICT_SOLVER_UNINSTALL_PARENT_FOLDER_0_1).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_CONFLICT_SOLVER_UNINSTALL_PARENT_FOLDER_0_1 = "ConflictSolver - Uninstall no longer needed parent folder \"{0}\" of \"{1}\".";
+
+        public static string MSG_CONFLICT_SOLVER_INSTALL_PARENT_FOLDER_0_1
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_CONFLICT_SOLVER_INSTALL_PARENT_FOLDER_0_1"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_CONFLICT_SOLVER_INSTALL_PARENT_FOLDER_0_1).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_CONFLICT_SOLVER_INSTALL_PARENT_FOLDER_0_1 = "ConflictSolver - Install needed parent folder \"{0}\" of \"{1}\".";
+
+        public static string MSG_CONFLICT_SOLVER_RESET_DESTINATION_PARENT_FOLDER_0_1
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_CONFLICT_SOLVER_RESET_DESTINATION_PARENT_FOLDER_0_1"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_CONFLICT_SOLVER_RESET_DESTINATION_PARENT_FOLDER_0_1).Replace("^", Environment.NewLine);
+            }
+        }
+
+        private const string DEFAULT_MSG_CONFLICT_SOLVER_RESET_DESTINATION_PARENT_FOLDER_0_1 = "ConflictSolver - Reset destination for conflicting parent folder \"{0}\" of \"{1}\".";
+
+        public static string MSG_KSPMA_UPDATE_ERROR
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_KSPMA_UPDATE_ERROR"];
+                return !string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_KSPMA_UPDATE_ERROR;
+            }
+        }
+        private const string DEFAULT_MSG_KSPMA_UPDATE_ERROR = "Error during KSP MA update check.";
+
+        public static string MSG_NO_SITEHANDLER_FOUND_FOR_URL_0
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_NO_SITEHANDLER_FOUND_FOR_URL_0"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_NO_SITEHANDLER_FOUND_FOR_URL_0).Replace("^", Environment.NewLine);
+            }
+        }
+        private const string DEFAULT_MSG_NO_SITEHANDLER_FOUND_FOR_URL_0 = "No SiteHandler for URL \"{0}\" found!^Mod Info Update aborded!";
+
+        public static string MSG_ERROR_EXPORT_FAILED_0
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_ERROR_EXPORT_FAILED_0"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_ERROR_EXPORT_FAILED_0).Replace("^", Environment.NewLine);
+            }
+        }
+        private const string DEFAULT_MSG_ERROR_EXPORT_FAILED_0 = "Error! Export failed: \"{0}\"";
+
+        public static string MSG_SELECT_NEW_ARCHIVE_PATH
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_SELECT_NEW_ARCHIVE_PATH"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_SELECT_NEW_ARCHIVE_PATH).Replace("^", Environment.NewLine);
+            }
+        }
+        private const string DEFAULT_MSG_SELECT_NEW_ARCHIVE_PATH = "Please select the new archive path.";
+
+        public static string MSG_MOD_0_ARCHIVE_PATH_CHANGED_TO_1
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_MOD_0_ARCHIVE_PATH_CHANGED_TO_1"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_MOD_0_ARCHIVE_PATH_CHANGED_TO_1).Replace("^", Environment.NewLine);
+            }
+        }
+        private const string DEFAULT_MSG_MOD_0_ARCHIVE_PATH_CHANGED_TO_1 = "Archive path of mod \"{0}\" changed to \"{1}\".";
+
+        public static string MSG_MOD_ARCHIVE_0_NOT_FOUND_MOD_1
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_MOD_ARCHIVE_0_NOT_FOUND_MOD_1"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_MOD_ARCHIVE_0_NOT_FOUND_MOD_1).Replace("^", Environment.NewLine);
+            }
+        }
+        private const string DEFAULT_MSG_MOD_ARCHIVE_0_NOT_FOUND_MOD_1 = "Mod archive \"{0}\" not found. Can't change archive path of mod \"{1}\".";
+
+        public static string MSG_COPY_MOD_0_DESTINATION_FAILED
+        {
+            get
+            {
+                string msg = Localizer.GlobalInstance["MSG_COPY_MOD_0_DESTINATION_FAILED"];
+                return (!string.IsNullOrEmpty(msg) ? msg : DEFAULT_MSG_COPY_MOD_0_DESTINATION_FAILED).Replace("^", Environment.NewLine);
+            }
+        }
+        private const string DEFAULT_MSG_COPY_MOD_0_DESTINATION_FAILED = "Error! Copy destinations of mod \"{0}\" failed!";
     }
 }
